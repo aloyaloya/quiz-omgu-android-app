@@ -4,14 +4,11 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -43,81 +40,74 @@ fun BottomNavigationBar(
     currentDestination: NavDestination?,
     isNavBarVisible: Boolean
 ) {
-    Column(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Bottom
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(IntrinsicSize.Min)
     ) {
         AnimatedVisibility(
             visible = isNavBarVisible,
             enter = slideInVertically(initialOffsetY = { it }),
             exit = slideOutVertically(targetOffsetY = { it })
         ) {
-            Box(
+            NavigationBar(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .navigationBarsPadding()
                     .padding(dimensionResource(R.dimen.medium_padding))
+                    .height(64.dp)
+                    .clip(AppShapes.large),
+                containerColor = MaterialTheme.colorScheme.primary,
+                windowInsets = WindowInsets(0.dp)
             ) {
-                NavigationBar(
-                    modifier = Modifier
-                        .height(64.dp)
-                        .clip(AppShapes.large),
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    tonalElevation = 0.dp,
-                    windowInsets = WindowInsets(0.dp),
-                ) {
-                    RootScreensRoutes.forEach { screen ->
-                        val isSelected = currentDestination?.hierarchy?.any {
-                            it.route == screen.route
-                        } == true
+                RootScreensRoutes.forEach { screen ->
+                    val isSelected = currentDestination?.hierarchy?.any {
+                        it.route == screen.route
+                    } == true
 
-                        NavigationBarItem(
-                            icon = {
-                                Icon(
-                                    modifier = Modifier
-                                        .size(dimensionResource(R.dimen.medium_icon))
-                                        .shadow(
-                                            elevation = 8.dp,
-                                            ambientColor = Color.Black.copy(alpha = 0.5f),
-                                            spotColor = Color.Black.copy(alpha = 0.5f)
-                                        ),
-                                    painter = painterResource(id = screen.iconOutline),
-                                    contentDescription = screen.name,
-                                    tint = MaterialTheme.colorScheme.onPrimary
-                                )
-                            },
-                            selected = isSelected,
-                            colors = NavigationBarItemDefaults.colors(
-                                selectedIconColor = MaterialTheme.colorScheme.onPrimary,
-                                unselectedIconColor = MaterialTheme.colorScheme.onPrimary,
-                                indicatorColor = MaterialTheme.colorScheme.primary
-                            ),
-                            label = {
-                                Box(modifier = Modifier
+                    NavigationBarItem(
+                        icon = {
+                            Icon(
+                                modifier = Modifier
+                                    .size(dimensionResource(R.dimen.medium_icon))
+                                    .shadow(
+                                        elevation = 8.dp,
+                                        spotColor = Color.Black.copy(alpha = 0.6f)
+                                    ),
+                                painter = painterResource(id = screen.iconOutline),
+                                contentDescription = screen.name
+                            )
+                        },
+                        selected = isSelected,
+                        colors = NavigationBarItemDefaults.colors(
+                            selectedIconColor = MaterialTheme.colorScheme.onPrimary,
+                            unselectedIconColor = MaterialTheme.colorScheme.onPrimary,
+                            indicatorColor = MaterialTheme.colorScheme.primary
+                        ),
+                        label = {
+                            Box(
+                                modifier = Modifier
                                     .size(dimensionResource(R.dimen.extra_small_spacer))
                                     .shadow(elevation = 4.dp, shape = CircleShape)
                                     .background(
+                                        shape = CircleShape,
                                         color = if (isSelected) {
                                             MaterialTheme.colorScheme.onPrimary
                                         } else {
                                             MaterialTheme.colorScheme.primary
                                         },
-                                        shape = CircleShape
                                     )
-                                    .clip(CircleShape)
-                                )
-                            },
-                            onClick = {
-                                navController.navigate(screen.route) {
-                                    popUpTo(navController.graph.findStartDestination().id) {
-                                        saveState = true
-                                    }
-                                    launchSingleTop = true
-                                    restoreState = true
+                            )
+                        },
+                        onClick = {
+                            navController.navigate(screen.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
                                 }
+                                launchSingleTop = true
+                                restoreState = true
                             }
-                        )
-                    }
+                        }
+                    )
                 }
             }
         }

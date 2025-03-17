@@ -4,13 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.example.quiz_omgu_android_app.ui.Root
 import com.example.quiz_omgu_android_app.ui.theme.QuizomguandroidappTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,8 +16,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+
             QuizomguandroidappTheme(dynamicColor = false) {
-                Root()
+                Scaffold { innerPadding ->
+                    Root(innerPaddings = innerPadding)
+                }
             }
         }
     }
