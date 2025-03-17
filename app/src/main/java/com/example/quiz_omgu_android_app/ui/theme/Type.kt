@@ -19,34 +19,41 @@ val Typography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
+        letterSpacing = 0.25.sp
     ),
     bodyMedium = TextStyle(
         fontFamily = RubikOneFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         lineHeight = 22.sp,
-        letterSpacing = 0.5.sp
+        letterSpacing = 0.25.sp
     ),
     bodySmall = TextStyle(
         fontFamily = RubikOneFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp,
-        lineHeight = 20.sp,
-        letterSpacing = 0.5.sp
+        lineHeight = 16.sp,
+        letterSpacing = 0.25.sp
     ),
     titleLarge = TextStyle(
         fontFamily = RubikOneFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-        lineHeight = 30.sp,
-        letterSpacing = 0.5.sp
+        fontSize = 32.sp,
+        lineHeight = 32.sp,
+        letterSpacing = 0.sp
     ),
     titleMedium = TextStyle(
         fontFamily = RubikOneFontFamily,
         fontWeight = FontWeight.Normal,
+        fontSize = 22.sp,
+        lineHeight = 30.sp,
+        letterSpacing = 0.sp
+    ),
+    titleSmall = TextStyle(
+        fontFamily = RubikOneFontFamily,
+        fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
+        letterSpacing = 0.sp
     ),
 )
