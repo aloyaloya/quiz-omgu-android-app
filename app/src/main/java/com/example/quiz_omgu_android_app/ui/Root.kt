@@ -1,8 +1,9 @@
 package com.example.quiz_omgu_android_app.ui
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -10,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
@@ -21,7 +23,10 @@ import com.example.quiz_omgu_android_app.navigation.NavGraph
 import com.example.quiz_omgu_android_app.ui.navigation.BottomNavigationBar
 
 @Composable
-fun Root() {
+fun Root(
+    modifier: Modifier = Modifier,
+    innerPaddings: PaddingValues
+) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -39,17 +44,18 @@ fun Root() {
         }
     }
 
-    LaunchedEffect(scrollDirection, scrollState.firstVisibleItemScrollOffset) {
-        val newVisibility = scrollDirection > 0 || scrollState.firstVisibleItemScrollOffset == 0
-        if (isNavBarVisible != newVisibility) {
-            isNavBarVisible = newVisibility
+    LaunchedEffect(scrollDirection, scrollState.firstVisibleItemScrollOffset, scrollState.isScrollInProgress) {
+        if (scrollState.isScrollInProgress) {
+            val newVisibility = scrollDirection > 0 || scrollState.firstVisibleItemScrollOffset == 0
+            if (isNavBarVisible != newVisibility) {
+                isNavBarVisible = newVisibility
+            }
         }
     }
 
     Box(
-        modifier = Modifier
-            .statusBarsPadding()
-            .fillMaxSize()
+        modifier = modifier
+            .padding(innerPaddings)
             .nestedScroll(nestedScrollConnection)
     ) {
         NavGraph(
@@ -60,6 +66,7 @@ fun Root() {
         )
 
         BottomNavigationBar(
+            modifier = Modifier.align(Alignment.BottomCenter),
             navController = navController,
             currentDestination = currentDestination,
             isNavBarVisible = isNavBarVisible

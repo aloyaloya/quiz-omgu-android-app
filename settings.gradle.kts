@@ -21,4 +21,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "quiz-omgu-android-app"
 include(":app")
- 

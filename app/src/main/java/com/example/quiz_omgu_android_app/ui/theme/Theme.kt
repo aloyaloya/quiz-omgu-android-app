@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 
 val AppShapes = Shapes(
+    extraSmall = RoundedCornerShape(16.dp),
     small = RoundedCornerShape(8.dp),
     medium = RoundedCornerShape(16.dp),
     large = RoundedCornerShape(32.dp),
@@ -28,13 +29,17 @@ private val DarkColorScheme = darkColorScheme(
 private val LightColorScheme = lightColorScheme(
     primary = Pink,
     onPrimary = White,
+    onPrimaryContainer = DarkPink,
     secondary = LightGreen,
     onSecondary = Green,
     onSecondaryContainer = White,
+    secondaryContainer = ShadowGreen,
     tertiary = TextGreen,
+    onTertiary = Gray,
     background = White,
-    surface = LightBlue,
-    onSurface = TextBlue
+    surfaceContainerLowest = RedProgress,
+    surfaceContainerHigh = YellowProgress,
+    surfaceContainerHighest = GreenProgress
 )
 
 @Composable
@@ -55,6 +60,7 @@ fun QuizomguandroidappTheme(
     }
 
     MaterialTheme(
+        shapes = AppShapes,
         colorScheme = colorScheme,
         typography = Typography,
         content = content

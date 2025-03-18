@@ -24,16 +24,17 @@ fun NavGraph(
     ) {
         composable(route = RootScreens.Rooms.route) {
             RoomsScreen(
-                onNavigateToCreateRoomScreen = {
+                scrollState = scrollState,
+                onCreateRoomClick = {
                     navController.navigate(RoomsScreens.CreateRoomScreen.route)
                 },
-                onNavBarVisibilityChange = onNavBarVisibilityChange
+                onNavBarVisibleChange = onNavBarVisibilityChange
             )
         }
         composable(route = RoomsScreens.CreateRoomScreen.route) {
             CreateRoomScreen(
                 onNavBarVisibilityChange = onNavBarVisibilityChange,
-                onBackPressed = { navController.popBackStack() }
+                onBackClick = { navController.popBackStack() }
             )
         }
     }
