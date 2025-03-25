@@ -34,7 +34,8 @@ fun NavGraph(
         composable(route = RoomsScreens.CreateRoomScreen.route) {
             CreateRoomScreen(
                 onNavBarVisibilityChange = onNavBarVisibilityChange,
-                onBackClick = { navController.popBackStack() }
+                onBackClick = { navController.popBackStack() },
+                viewModel = hiltViewModel()
             )
         }
     }
